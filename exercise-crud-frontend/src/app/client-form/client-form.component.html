@@ -1,0 +1,87 @@
+<h2>{{ form.get('name')?.value ? 'Edit Client' : 'Create Client' }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+
+  <div>
+    <label for="name">Name</label>
+    <input id="name" formControlName="name" type="text" />
+    <div *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+      Name is required.
+    </div>
+  </div>
+
+  <div>
+    <label for="dateOfBirth">Date of Birth</label>
+    <input id="dateOfBirth" formControlName="dateOfBirth" type="date" />
+    <div *ngIf="form.get('dateOfBirth')?.touched && form.get('dateOfBirth')?.invalid">
+      Date of birth is required.
+    </div>
+  </div>
+
+  <div>
+    <label for="fiscalId">Fiscal ID</label>
+    <input id="fiscalId" formControlName="fiscalId" type="text" />
+    <div *ngIf="form.get('fiscalId')?.touched && form.get('fiscalId')?.invalid">
+      Fiscal ID is required.
+    </div>
+  </div>
+
+  <hr />
+
+  <div formArrayName="addresses">
+    <h3>Addresses</h3>
+
+    <div *ngFor="let address of addresses.controls; let i = index" [formGroupName]="i">
+      <fieldset>
+        <legend>Address {{ i + 1 }}</legend>
+
+        <label>Street</label>
+        <input formControlName="street" type="text" />
+        <div *ngIf="address.get('street')?.touched && address.get('street')?.invalid">
+          Required
+        </div>
+
+        <label>Number</label>
+        <input formControlName="number" type="text" />
+        <div *ngIf="address.get('number')?.touched && address.get('number')?.invalid">
+          Required
+        </div>
+
+        <label>Complement</label>
+        <input formControlName="complement" type="text" />
+
+        <label>Postal Code</label>
+        <input formControlName="postalCode" type="text" />
+        <div *ngIf="address.get('postalCode')?.touched && address.get('postalCode')?.invalid">
+          Required
+        </div>
+
+        <label>Council</label>
+        <input formControlName="council" type="text" />
+        <div *ngIf="address.get('council')?.touched && address.get('council')?.invalid">
+          Required
+        </div>
+
+        <label>District</label>
+        <input formControlName="district" type="text" />
+        <div *ngIf="address.get('district')?.touched && address.get('district')?.invalid">
+          Required
+        </div>
+
+        <button type="button" (click)="removeAddress(i)" [disabled]="addresses.length === 1">
+          Remove Address
+        </button>
+      </fieldset>
+    </div>
+
+    <button type="button" (click)="addAddress()">Add Address</button>
+  </div>
+
+  <hr />
+
+<button type="submit" [disabled]="form.invalid">
+  {{ isEditing ? 'Update Client' : 'Save Client' }}
+</button>
+<button type="button" (click)="router.navigate(['/'])">Cancel</button>
+
+</form>

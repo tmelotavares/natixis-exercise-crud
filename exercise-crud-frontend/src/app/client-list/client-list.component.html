@@ -1,0 +1,29 @@
+<h2>Client List</h2>
+
+<button routerLink="/create">+ New Client</button>
+
+<table *ngIf="clients.length > 0; else noClients">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Fiscal ID</th>
+      <th>Date of Birth</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let client of clients">
+      <td>{{ client.name }}</td>
+      <td>{{ client.fiscalId }}</td>
+      <td>{{ client.dateOfBirth }}</td>
+      <td>
+        <button (click)="edit(client.id)">Edit</button>
+        <button (click)="remove(client.id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #noClients>
+  <p>No clients found. Click "New Client" to add one.</p>
+</ng-template>
